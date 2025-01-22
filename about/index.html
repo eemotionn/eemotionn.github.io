@@ -46,6 +46,8 @@
 
 
 
+<script src="https://s4.zstatic.net/ajax/libs/twikoo/1.6.31/twikoo.all.min.js"></script>
+
 
 
 <link rel="stylesheet" href="/css/main.css" />
@@ -199,6 +201,10 @@
     
     
     
+    <div id="comment">
+        <div id="twikoo-container"></div>
+    </div>
+    
     
 </div>
 
@@ -234,6 +240,16 @@
     
 
 
+
+<script>
+    twikoo.init({
+        el: "#twikoo-container",
+        envId: "",
+        region: "",
+        path: location.pathname,
+        lang: "",
+    })
+</script>
 
 
     

